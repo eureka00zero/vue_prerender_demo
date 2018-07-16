@@ -16,17 +16,22 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    <vue-loading type="bars" color="#d9544e" :size="{ width: '50px', height: '50px' }"></vue-loading>    
   </div>
 </template>
 
 <script>
+import { VueLoading } from 'vue-loading-template'
 export default {
   name: 'app',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
-  }
+  },
+    components: {
+        VueLoading
+    }
 }
 </script>
 

@@ -1,5 +1,8 @@
 var path = require('path')
 var webpack = require('webpack')
+var PrerenderSpaPlugin = require('prerender-spa-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
+var htmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: './src/main.js',
@@ -28,7 +31,8 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        query: {presets: ['es2015', 'stage-3']}
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -39,6 +43,21 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new CopyWebpackPlugin([{
+      from: 'src/static'
+    }]),
+    new PrerenderSpaPlugin(
+      path.join(__dirname, 'dist'),
+      [ '/', '/products/1', '/products/2', '/products/3']
+    ),
+    new htmlWebpackPlugin({
+        template: 'index.html',
+        filename: 'test/index.html',
+        inject: 'head',
+        hash: true
+    })
+  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
